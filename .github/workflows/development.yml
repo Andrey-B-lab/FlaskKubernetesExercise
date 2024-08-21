@@ -22,6 +22,13 @@ jobs:
 ###        Connected to my personal Sonar Cloud account      ###
 ################################################################
 
+    - name: Extract repository name
+      id: repo-name
+      run: |
+        REPO_NAME="${GITHUB_REPOSITORY##*/}"
+        echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+        echo "::set-output name=repo_name::$REPO_NAME"
+
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
       env:
@@ -32,7 +39,7 @@ jobs:
         args:
           # Unique keys of your project and organization. You can find them in SonarCloud > Information (bottom-left menu)
           # mandatory
-          -Dsonar.projectKey=Andrey-B-lab_react-kubernetes-exercise-1
+          -Dsonar.projectKey=Andrey-B-lab_${{ env.REPO_NAME }}
           -Dsonar.organization=andrinatravel
 
     - name: Setup Git
@@ -98,12 +105,12 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Extract repository name
-      id: repo-name
-      run: |
-        REPO_NAME="${GITHUB_REPOSITORY##*/}"
-        echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
-        echo "::set-output name=repo_name::$REPO_NAME"
+#    - name: Extract repository name
+#      id: repo-name
+#      run: |
+#        REPO_NAME="${GITHUB_REPOSITORY##*/}"
+#        echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
+#        echo "::set-output name=repo_name::$REPO_NAME"
 
     - name: Build Docker image
       env:
