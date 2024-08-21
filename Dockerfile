@@ -38,7 +38,7 @@ USER appuser
 # Copy the source code(app.py) into the container.
 COPY app.py .
 
-# Expose the port that the application listens on.
+# Expose the port that the application listens on. 
 # In most Unix-like operating systems, binding to ports below 1024 requires elevated privileges.
 # This application runs on Docker as an appuser, which is restricted to binding to ports below 1024.
 EXPOSE 8080
