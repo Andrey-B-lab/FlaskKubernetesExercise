@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 ARG PYTHON_VERSION=3.11
-FROM python:${PYTHON_VERSION}-alpine3.19 as base
+FROM python:${PYTHON_VERSION}-alpine3.19 AS base
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -16,14 +16,12 @@ WORKDIR /app
 RUN apk add --no-cache \
     gcc \
     musl-dev \
-    libffi-dev \
     postgresql-dev \
     build-base \
     linux-headers \
-    libressl-dev \
-    ca-certificates
+    libffi-dev
 
-# Install Python dependencies
+# Upgrade pip
 RUN python -m pip install --upgrade pip==24.0
 
 # Copy the requirements.txt and install dependencies
